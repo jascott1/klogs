@@ -1,0 +1,173 @@
+{
+  "Name": "kolla",
+  "Root": "~/",
+  "Windows": [
+    {
+      "Name": "master node",
+      "Layout": "main-vertical",
+      "Panes": [
+        "tail -f /var/log/syslog",
+        "sed '/####/q' ~/.tmux.conf"
+      ]
+    },
+    {
+      "Name": "cinder-api",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep cinder-api | cut -d'/' -f2) -c main -- tail -f /var/log/kolla/cinder/cinder-api.log"
+      ]
+    },
+    {
+      "Name": "cinder-scheduler",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep cinder-scheduler| cut -d'/' -f2) -c main -- tail -f /var/log/kolla/cinder/cinder-scheduler.log"
+      ]
+    },
+    {
+      "Name": "glance-api",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep glance-api | cut -d'/' -f2) -c main -- tail -f /var/log/kolla/glance/api.log"
+      ]
+    },
+    {
+      "Name": "glance-registry",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep glance-registry| cut -d'/' -f2) -c main -- tail -f /var/log/kolla/glance/registry.log"
+      ]
+    },
+    {
+      "Name": "keystone",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep keystone | cut -d'/' -f2) -c main -- tail -f /var/log/kolla/keystone/keystone.log"
+      ]
+    },
+    {
+      "Name": "mariadb",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep mariadb | cut -d'/' -f2) -- tail -f /var/log/kolla/mariadb/mariadb.log"
+      ]
+    },
+    {
+      "Name": "neutron-dhcp-agent",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep neutron-dhcp-agent | cut -d'/' -f2) -- tail -f /var/log/kolla/neutron/neutron-dhcp-agent.log"
+      ]
+    },
+    {
+      "Name": "neutron-l3-agent",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep neutron-l3-agent | cut -d'/' -f2) -- tail -f /var/log/kolla/neutron/neutron-l3-agent.log"
+      ]
+    },
+    {
+      "Name": "neutron-metadata-agent",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep neutron-metadata-agent | cut -d'/' -f2) -- tail -f /var/log/kolla/neutron/neutron-metadata-agent.log"
+      ]
+    },
+    {
+      "Name": "neutron-openvswitch-agent",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep neutron-openvswitch-agent | cut -d'/' -f2) -- tail -f /var/log/kolla/neutron/neutron-openvswitch-agent.log"
+      ]
+    },
+    {
+      "Name": "neutron-server",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep neutron-server | cut -d'/' -f2) -- tail -f /var/log/kolla/neutron/neutron-server.log"
+      ]
+    },
+    {
+      "Name": "nova-api",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep nova-api | cut -d'/' -f2) -- tail -f /var/log/kolla/nova/nova-api.log"
+      ]
+    },
+    {
+      "Name": "nova-conductor",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep nova-conductor | cut -d'/' -f2) -- tail -f /var/log/kolla/nova/nova-conductor.log"
+      ]
+    },
+    {
+      "Name": "nova-consoleauth",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep nova-consoleauth| cut -d'/' -f2) -- tail -f /var/log/kolla/nova/nova-consoleauth.log"
+      ]
+    },
+    {
+      "Name": "nova-nonvncproxy",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep nova-novncproxy | cut -d'/' -f2) -c main -- tail -f /var/log/kolla/nova/nova-novncproxy.log"
+      ]
+    },
+    {
+      "Name": "nova-scheduler",
+      "Panes": [
+        "kubectl exec -ti $(k get pods -o=name | grep nova-scheduler| cut -d'/' -f2) -- tail -f /var/log/kolla/nova/nova-scheduler.log"
+      ]
+    },
+    {
+      "Name": "nova-compute-1-2",
+      "Panes": [
+        "POD=$(kubectl get pods -o=name | grep nova-compute | awk '/nova-compute/{i++}i==1' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/nova/nova-compute.log",
+        "POD=$(kubectl get pods -o=name | grep nova-compute | awk '/nova-compute/{i++}i==2' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/nova/nova-compute.log"
+      ]
+    },
+    {
+      "Name": "nova-compute-3-4",
+      "Panes": [
+        "POD=$(kubectl get pods -o=name | grep nova-compute | awk '/nova-compute/{i++}i==3' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/nova/nova-compute.log",
+        "POD=$(kubectl get pods -o=name | grep nova-compute | awk '/nova-compute/{i++}i==4' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/nova/nova-compute.log"
+      ]
+    },
+    {
+      "Name": "nova-libvirt-1-2",
+      "Panes": [
+        "POD=$(kubectl get pods -o=name | grep nova-libvirt| awk '/libvirt/{i++}i==1' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/libvirt/libvirtd.log",
+        "POD=$(kubectl get pods -o=name | grep nova-libvirt| awk '/libvirt/{i++}i==2' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/libvirt/libvirtd.log"
+      ]
+    },
+    {
+      "Name": "nova-libvirt-3-4",
+      "Panes": [
+        "POD=$(kubectl get pods -o=name | grep nova-libvirt| awk '/libvirt/{i++}i==3' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/libvirt/libvirtd.log",
+        "POD=$(kubectl get pods -o=name | grep nova-libvirt| awk '/libvirt/{i++}i==4' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/libvirt/libvirtd.log"
+      ]
+    },
+    {
+      "Name": "openvswitch-ovsdb-1-2",
+      "Panes": [
+        "POD=$(kubectl get pods -o=name | grep openvswitch-ovsdb | awk '/openvswitch-ovsdb/{i++}i==1' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/openvswitch/ovsdb-server.log",
+        "POD=$(kubectl get pods -o=name | grep openvswitch-ovsdb | awk '/openvswitch-ovsdb/{i++}i==2' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/openvswitch/ovsdb-server.log"
+      ]
+    },
+    {
+      "Name": "openvswitch-ovsdb-3-4",
+      "Panes": [
+        "POD=$(kubectl get pods -o=name | grep openvswitch-ovsdb | awk '/openvswitch-ovsdb/{i++}i==3' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/openvswitch/ovsdb-server.log",
+        "POD=$(kubectl get pods -o=name | grep openvswitch-ovsdb | awk '/openvswitch-ovsdb/{i++}i==4' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/openvswitch/ovsdb-server.log"
+      ]
+    },
+    {
+      "Name": "openvswitch-vswitchd-1-2",
+      "Panes": [
+        "POD=$(kubectl get pods -o=name | grep openvswitch-vswitchd | awk '/openvswitch-vswitchd/{i++}i==1' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/openvswitch/ovs-vswitchd.log",
+        "POD=$(kubectl get pods -o=name | grep openvswitch-vswitchd | awk '/openvswitch-vswitchd/{i++}i==2' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/openvswitch/ovs-vswitchd.log"
+      ]
+    },
+    {
+      "Name": "openvswitch-vswitchd-3-4",
+      "Panes": [
+        "POD=$(kubectl get pods -o=name | grep openvswitch-vswitchd | awk '/openvswitch-vswitchd/{i++}i==3' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/openvswitch/ovs-vswitchd.log",
+        "POD=$(kubectl get pods -o=name | grep openvswitch-vswitchd | awk '/openvswitch-vswitchd/{i++}i==4' | cut -d'/' -f2) && kubectl exec -ti $POD -- tail -f /var/log/kolla/openvswitch/ovs-vswitchd.log"
+      ]
+    },
+
+    {
+      "Name": "logs",
+      "Panes": [
+        "tail -f /var/log/syslog"
+      ]
+    }
+  ]
+}
