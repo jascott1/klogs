@@ -4,8 +4,8 @@ NOTE: This is a troubleshooting tool for Kubernetes development clusters running
 
 Use `gmux` session manager to create a custom Tmux session on master node showing logs from a kolla-kubernetes installation.
 
-<img src="https://github.com/jascott1/bins/blob/master/img/klogs_example_1280.jpg" alt="ChooseWindow" style="width: 200px;"/>
-<img src="https://github.com/jascott1/bins/blob/master/img/klogs_choose_window_1280.jpg" alt="ChooseWindow" style="width: 200px;"/>
+<img src="https://github.com/jascott1/bins/blob/master/img/klogs_example_1280.jpg" alt="ChooseWindow" width="400"/>
+<img src="https://github.com/jascott1/bins/blob/master/img/klogs_choose_window_1280.jpg" alt="ChooseWindow" width="400"/>
 
 ## Installation
 
